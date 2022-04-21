@@ -18,8 +18,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef ethernet_h_
-#define ethernet_h_
+#if !defined(_LIBNAPC_ETHERNET_PATCHED_h)
+	#define _LIBNAPC_ETHERNET_PATCHED_h
 
 // All symbols exposed to Arduino sketches are contained in this header file
 //
