@@ -11,8 +11,8 @@
 // w5100.h contains private W5x00 hardware "driver" level definitions
 // which are not meant to be exposed to other libraries or Arduino users
 
-#ifndef	W5100_H_INCLUDED
-#define	W5100_H_INCLUDED
+#if !defined(_LIBNAPC_W5100_PATCHED_h)
+	#define _LIBNAPC_W5100_PATCHED_h
 
 #include <Arduino.h>
 #include <SPI.h>
