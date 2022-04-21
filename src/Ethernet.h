@@ -53,36 +53,36 @@
 #include "Server.h"
 #include "Udp.h"
 
-enum EthernetLinkStatus {
-	Unknown,
-	LinkON,
-	LinkOFF
+enum libnapc__EthernetLinkStatus {
+	libnapc__Unknown,
+	libnapc__LinkON,
+	libnapc__LinkOFF
 };
 
-enum EthernetHardwareStatus {
-	EthernetNoHardware,
-	EthernetW5100,
-	EthernetW5200,
-	EthernetW5500
+enum libnapc__EthernetHardwareStatus {
+	libnapc__EthernetNoHardware,
+	libnapc__EthernetW5100,
+	libnapc__EthernetW5200,
+	libnapc__EthernetW5500
 };
 
-class EthernetUDP;
-class EthernetClient;
-class EthernetServer;
-class DhcpClass;
+class libnapc__EthernetUDP;
+class libnapc__EthernetClient;
+class libnapc__EthernetServer;
+class libnapc__DhcpClass;
 
-class EthernetClass {
+class libnapc__EthernetClass {
 private:
 	static IPAddress _dnsServerAddress;
-	static DhcpClass* _dhcp;
+	static libnapc__DhcpClass* _dhcp;
 public:
 	// Initialise the Ethernet shield to use the provided MAC address and
 	// gain the rest of the configuration through DHCP.
 	// Returns 0 if the DHCP configuration failed, and 1 if it succeeded
 	static int begin(uint8_t *mac, unsigned long timeout = 60000, unsigned long responseTimeout = 4000);
 	static int maintain();
-	static EthernetLinkStatus linkStatus();
-	static EthernetHardwareStatus hardwareStatus();
+	static libnapc__EthernetLinkStatus linkStatus();
+	static libnapc__EthernetHardwareStatus hardwareStatus();
 
 	// Manual configuration
 	static void begin(uint8_t *mac, IPAddress ip);
@@ -105,9 +105,9 @@ public:
 	void setRetransmissionTimeout(uint16_t milliseconds);
 	void setRetransmissionCount(uint8_t num);
 
-	friend class EthernetClient;
-	friend class EthernetServer;
-	friend class EthernetUDP;
+	friend class libnapc__EthernetClient;
+	friend class libnapc__EthernetServer;
+	friend class libnapc__EthernetUDP;
 private:
 	// Opens a socket(TCP or UDP or IP_RAW mode)
 	static uint8_t socketBegin(uint8_t protocol, uint16_t port);
@@ -144,12 +144,12 @@ private:
 	static void socketPortRand(uint16_t n);
 };
 
-extern EthernetClass Ethernet;
+extern libnapc__EthernetClass libnapc__Ethernet;
 
 
-#define UDP_TX_PACKET_MAX_SIZE 24
+#define libnapc__UDP_TX_PACKET_MAX_SIZE 24
 
-class EthernetUDP : public UDP {
+class libnapc__EthernetUDP : public UDP {
 private:
 	uint16_t _port; // local port to listen on
 	IPAddress _remoteIP; // remote IP address for the incoming packet whilst it's being processed
@@ -161,7 +161,7 @@ protected:
 	uint16_t _remaining; // remaining bytes of incoming packet yet to be processed
 
 public:
-	EthernetUDP() : sockindex(MAX_SOCK_NUM) {}  // Constructor
+	libnapc__EthernetUDP() : sockindex(MAX_SOCK_NUM) {}  // Constructor
 	virtual uint8_t begin(uint16_t);      // initialize, start listening on specified port. Returns 1 if successful, 0 if there are no sockets available to use
 	virtual uint8_t beginMulticast(IPAddress, uint16_t);  // initialize, start listening on specified port. Returns 1 if successful, 0 if there are no sockets available to use
 	virtual void stop();  // Finish with the UDP socket
@@ -211,11 +211,11 @@ public:
 
 
 
-class EthernetClient : public Client {
+class libnapc__EthernetClient : public Client {
 public:
-	EthernetClient() : _sockindex(MAX_SOCK_NUM), _timeout(1000) { }
-	EthernetClient(uint8_t s) : _sockindex(s), _timeout(1000) { }
-	virtual ~EthernetClient() {};
+	libnapc__EthernetClient() : _sockindex(MAX_SOCK_NUM), _timeout(1000) { }
+	libnapc__EthernetClient(uint8_t s) : _sockindex(s), _timeout(1000) { }
+	virtual ~libnapc__EthernetClient() {};
 
 	uint8_t status();
 	virtual int connect(IPAddress ip, uint16_t port);
@@ -241,7 +241,7 @@ public:
 	virtual uint16_t remotePort();
 	virtual void setConnectionTimeout(uint16_t timeout) { _timeout = timeout; }
 
-	friend class EthernetServer;
+	friend class libnapc__EthernetServer;
 
 	using Print::write;
 
@@ -251,13 +251,13 @@ private:
 };
 
 
-class EthernetServer : public Server {
+class libnapc__EthernetServer : public Server {
 private:
 	uint16_t _port;
 public:
-	EthernetServer(uint16_t port) : _port(port) { }
-	EthernetClient available();
-	EthernetClient accept();
+	libnapc__EthernetServer(uint16_t port) : _port(port) { }
+	libnapc__EthernetClient available();
+	libnapc__EthernetClient accept();
 	virtual void begin();
 	virtual size_t write(uint8_t);
 	virtual size_t write(const uint8_t *buf, size_t size);
@@ -270,7 +270,7 @@ public:
 };
 
 
-class DhcpClass {
+class libnapc__DhcpClass {
 private:
 	uint32_t _dhcpInitialTransactionId;
 	uint32_t _dhcpTransactionId;
