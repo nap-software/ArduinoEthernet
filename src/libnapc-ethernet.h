@@ -233,8 +233,8 @@ public:
 	virtual operator bool() { return _sockindex < MAX_SOCK_NUM; }
 	virtual bool operator==(const bool value) { return bool() == value; }
 	virtual bool operator!=(const bool value) { return bool() != value; }
-	virtual bool operator==(const EthernetClient&);
-	virtual bool operator!=(const EthernetClient& rhs) { return !this->operator==(rhs); }
+	virtual bool operator==(const libnapc__EthernetClient&);
+	virtual bool operator!=(const libnapc__EthernetClient& rhs) { return !this->operator==(rhs); }
 	uint8_t getSocketNumber() const { return _sockindex; }
 	virtual uint16_t localPort();
 	virtual IPAddress remoteIP();
